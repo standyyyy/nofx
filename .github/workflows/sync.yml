@@ -5,9 +5,15 @@ on:
     - cron: '0 */6 * * *'  # 每6小时同步一次
   workflow_dispatch:       # 允许手动触发
 
+# 确保只在 main 分支运行
+permissions:
+  contents: write
+
 jobs:
   sync:
     runs-on: ubuntu-latest
+    # 只在 main 分支运行
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout your fork
         uses: actions/checkout@v4
